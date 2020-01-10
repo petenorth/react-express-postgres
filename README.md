@@ -33,8 +33,6 @@ this starts two express servers (frontend and backend) but in development mode m
     docker stop to-do-api
     docker rm to-do-api
     docker run --link postgres:postgres -e PGUSER=postgres -e PGHOST=postgres -e PGDATABASE=postgres -e PGPASSWORD= -e PGPORT=5432 -p 3001:3001 --name to-do-api -d to-do-api:latest 
-    docker stop web-app
-    docker rm web-app
     docker run --name web-app -p 8080:8080 -d react-web-app:latest
   
 And then access the web app via http://localhost:8080
