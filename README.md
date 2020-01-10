@@ -54,7 +54,13 @@ The Docker daemon in minikube by default cannot pull locally built images. There
     minikube start
     eval $(minikube docker-env)
 
-this points your current shell to the Docker daemon running within minikube.
+this points your current shell to the Docker daemon running within minikube. Then we rebuild the images
+
+    cd ../client
+    docker build -t react-web-app:latest . 
+    cd ../server-spring-boot
+    mvn clean install
+    docker build -t to-do-api-springboot:latest .
 
 The ingress minikube addon must be enabled
 
@@ -68,6 +74,14 @@ Then to create the deployment, service and ingress  resources execute
 
     cd ..
     kubectl create -f kubernetes/resources.yml
+    
+Check the three pods are running
+
+    kubectl get pod -w
+    
+Check the ingress points have been assigned an IP address
+
+    kubectl get ing -w
 
 Then to confirm the end points are accessible
 
