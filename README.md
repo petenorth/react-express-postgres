@@ -35,9 +35,9 @@ this starts two express servers (frontend and backend) but in development mode m
     docker run --link postgres:postgres -e PGUSER=postgres -e PGHOST=postgres -e PGDATABASE=postgres -e PGPASSWORD= -e PGPORT=5432 -p 3001:3001 --name to-do-api -d to-do-api:latest 
     docker stop web-app
     docker rm web-app
-    docker run --name web-app -p 8080:80 -d react-web-app:latest
+    docker run --name web-app -p 8080:8080 -d react-web-app:latest
   
-And then access the web app via http://localhost:3000
+And then access the web app via http://localhost:8080
 
 As a demonstration of the benefits of three tier archtiectures (or architectural layers in general) there is an alternative API layer implementaton in Java using Spring Boot and Tomcat.
 
