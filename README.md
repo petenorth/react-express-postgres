@@ -44,7 +44,7 @@ As a demonstration of the benefits of three tier archtiectures (or architectural
     docker build -t to-do-api-springboot:latest .
     docker stop to-do-api
     docker rm to-do-api
-    docker run --name to-do-api -p 3001:8080 -d to-do-api-springboot:latest
+    docker run --name to-do-api --link postgres:postgres -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres -d to-do-api-springboot:latest
 
 Running in Kubernetes
 
