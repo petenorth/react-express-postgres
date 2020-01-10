@@ -18,7 +18,7 @@ So firstly with dev servers and NOT using docker-compose as the example blog pos
     docker run --name=postgres -p 5432:5432 -d  postgres:latest
     docker run --link postgres:postgres -e PGUSER=postgres -e PGHOST=postgres -e PGDATABASE=postgres -e PGPASSWORD= -e PGPORT=5432 -p 3001:3001 --name to-do-api -d to-do-api-dev:latest
 
-    docker run --name web-app -p 3000:3000 -d react-web-app-dev:latest
+    docker run --name web-app -p 3000:3000 -e REACT_APP_TO_DO_ITEMS_API=http://localhost:3001/v1 -d react-web-app-dev:latest
 
 To test 
 
