@@ -2,7 +2,7 @@ I focused on wanting to demonstrate a three tier app that used React as the fron
 
 To this end I found https://levelup.gitconnected.com/build-a-multi-container-application-with-docker-compose-460f6199ef3c which uses docker-compose to spin up the different tiers as docker containers .
 
-I forked the corresponding repo so I could show docker images with optimized production build.
+I forked the corresponding repo so I could show docker images with optimized production builds.
 
 
 So firstly with dev servers and NOT using docker-compose as the example blog post only works because the docker-compose.yml includes a build which delays the starting of the API server, the API server must start after successful Postgres server startup hence we fall back to the docker run command.
@@ -70,7 +70,7 @@ wait until it appears in
 
     kubectl get pod -n kube-system -w
 
-Then to create the deployment, service and ingress  resources execute
+Then to create the deployment, service and ingress  resources 
 
     cd ..
     kubectl create -f kubernetes/resources.yml
