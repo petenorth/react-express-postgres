@@ -35,7 +35,7 @@ this starts two express servers (frontend and backend) but in development mode m
     docker run --link postgres:postgres -e PGUSER=postgres -e PGHOST=postgres -e PGDATABASE=postgres -e PGPASSWORD= -e PGPORT=5432 -e PORT=8080 -p 8080:8080 --name to-do-api -d to-do-api:latest 
     docker run --name web-app -p 8081:8080 --link to-do-api:to-do-api -d react-web-app:latest
   
-And then access the web app via http://localhost:8081
+And then access the web app via http://localhost:8081 . The interesting thing with the production version of the web-app image is that since it is static content there is no way to make the to-do-api REST service endpoint configurable. Instead we make the nginx server a reverse proxy for this service (see the `default.conf` file that is copied into the image). By default the variable `REACT_APP_TO_DO_ITEMS_API` in `.env` file for the node app points to a relative URL for the to-do-api end point. This is then directed via the reverse proxy to `http://to-do-api:8080` which because of the `--link to-do-api` of the docker run command will resolve to the to-do-api docker container.
 
 As a demonstration of the benefits of three tier archtiectures (or architectural layers in general) there is an alternative API layer implementaton in Java using Spring Boot and Tomcat.
 
@@ -91,7 +91,9 @@ And that the static html content can be served
 
     curl http://$(minikube ip)
 
-Then to see the app working open in a browser http://$(minikube ip)
+Then to see the app working open in a browser http://$(minikube ip) .
+
+The reverse proxy of nginx now resolves http://to-do-api:8080 since to-do-api is known by the DNS server of the cluster (this might need to be explicitely enabled see https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#dns ) as pointing to the clusterIP address of the to-do-api service which load balances traffic to any of the pods associated with the service (in our case the deployment resource definitions specify only one replica).
 
 
 
