@@ -21,6 +21,22 @@ spec:
       - image: react-web-app:latest
         name: web-app
         imagePullPolicy: Never
+        livenessProbe:
+          failureThreshold: 1
+          httpGet:
+              path: /status
+              port: 8081
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /status
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 1
         resources: {}
 status: {}
 ---
@@ -47,6 +63,22 @@ spec:
       - image: to-do-api-springboot:latest
         name: to-do-api
         imagePullPolicy: Never
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
+          periodSeconds: 3
+          failureThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+          initialDelaySeconds: 20
+          timeoutSeconds: 2
+          periodSeconds: 8
+          failureThreshold: 1
         env:
         - name: SPRING_DATASOURCE_URL
           value: "jdbc:postgresql://postgres:5432/postgres"
