@@ -95,5 +95,7 @@ Then to see the app working open in a browser http://$(minikube ip) .
 
 The reverse proxy of nginx now resolves http://to-do-api:8080 since to-do-api is known by the DNS server of the cluster (this might need to be explicitely enabled see https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/#dns ) as pointing to the clusterIP address of the to-do-api service which load balances traffic to any of the pods associated with the service (in our case the deployment resource definitions specify only one replica).
 
+Note that the deployment resources in `kubernetes/resources.yml` include liveness and readiness checks so that the pods are killed and restarted if the configured GET requests fail. For the web-app nginx container it relies on a status page configured via `client/nginx/status.conf` . For the Spring Boot to-do-api container it relies on the Spring Boot health endpoint made availble via the Spring Boot Actuator dependency in the pom.xml file. Both the nginx and Spring Boot endpoints have been configured to be served via a a private 8081 port which is not exposed as a kubernetes service or ingress.
+
 
 
